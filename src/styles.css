@@ -1,0 +1,782 @@
+/* 1. Shared colors and defaults. Change these variables to restyle the whole site. */
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #202122;
+  background: #fff;
+  font-synthesis: none;
+  --blue: #36c;
+  --ink: #202122;
+  --muted: #68717b;
+  --border: #d8dce2;
+  --soft: #f7f8fa;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+button,
+a,
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  cursor: pointer;
+}
+a {
+  color: var(--blue);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid #7095e8;
+  outline-offset: 3px;
+}
+button {
+  transition: background-color 120ms;
+}
+p {
+  line-height: 1.8;
+}
+section {
+  scroll-margin-top: 24px;
+}
+/* Georgia provides a familiar encyclopedia heading without downloading fonts. */
+h1,
+h2 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: normal;
+}
+h1 {
+  font-size: 42px;
+  margin: 14px 0 8px;
+  line-height: 1.15;
+}
+h2 {
+  font-size: 26px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+  margin: 30px 0 17px;
+}
+h3 {
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0 0 6px;
+  font-weight: 600;
+}
+.muted,
+.section-note {
+  color: var(--muted);
+}
+.sr-only,
+.skip-link:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.skip-link:focus {
+  position: fixed;
+  z-index: 5;
+  top: 10px;
+  left: 10px;
+  padding: 15px;
+  background: white;
+  border: 1px solid var(--blue);
+}
+
+/* 2. Header: Flexbox arranges a small number of items in a row. */
+.site-header {
+  min-height: 104px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding: 20px 4%;
+  border-bottom: 1px solid var(--border);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+}
+.brand strong {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 25px;
+  font-weight: normal;
+  letter-spacing: 1.2px;
+}
+.brand small {
+  display: block;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 13px;
+  text-align: center;
+  margin-top: 4px;
+}
+.header-description {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 13px;
+}
+.primary-button,
+.secondary-button {
+  border: 1px solid var(--blue);
+  border-radius: 3px;
+  padding: 11px 18px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.primary-button {
+  background: var(--blue);
+  color: #fff;
+}
+.primary-button:hover {
+  background: #284fa5;
+}
+.secondary-button {
+  background: white;
+  color: var(--blue);
+  border-color: #aab9d6;
+}
+.secondary-button:hover {
+  background: #eef3fc;
+}
+
+/* 3. Main layout: the left column is fixed-width, the article uses remaining space. */
+.page-layout {
+  display: grid;
+  grid-template-columns: 205px minmax(0, 1fr);
+  gap: 48px;
+  max-width: 1500px;
+  margin: auto;
+  padding: 40px 4% 0;
+}
+.sidebar {
+  min-width: 0;
+  align-self: start;
+  position: sticky;
+  top: 24px;
+}
+.sidebar-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 2px 0 17px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-heading span {
+  background: #edf0f4;
+  color: #626a76;
+  border-radius: 3px;
+  padding: 2px 7px;
+  font-weight: normal;
+}
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #bcc3cc;
+  border-radius: 3px;
+  margin: 20px 0 16px;
+  padding: 8px;
+}
+.search-box svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: #68717b;
+  stroke-width: 1.6;
+  flex-shrink: 0;
+}
+.search-box input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  font-size: 13px;
+}
+.book-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.book-nav button {
+  text-align: left;
+  background: none;
+  border: 0;
+  border-left: 3px solid transparent;
+  padding: 11px 10px 11px 13px;
+  color: #3b444e;
+  line-height: 1.4;
+  font-size: 14px;
+}
+.book-nav button:hover {
+  background: var(--soft);
+}
+.book-nav button.selected {
+  color: #244f9e;
+  border-left-color: var(--blue);
+  background: #edf2fb;
+  font-weight: bold;
+}
+.book-nav button span {
+  display: block;
+  font-size: 11px;
+  font-weight: normal;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.sidebar-bottom {
+  margin-top: 34px;
+  padding: 0 12px;
+}
+.small-rule {
+  display: block;
+  height: 1px;
+  background: #b9c5d8;
+  width: 26px;
+}
+.sidebar-bottom p {
+  font:
+    19px/1.5 Georgia,
+    serif;
+  color: #5a6675;
+  margin: 18px 0 10px;
+}
+.sidebar-bottom small {
+  color: #6d7680;
+  font-size: 11px;
+  line-height: 1.7;
+}
+.empty-message {
+  font-size: 13px;
+  color: var(--muted);
+}
+main {
+  min-width: 0;
+}
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  color: #5f6f84;
+  font-weight: bold;
+}
+.eyebrow span {
+  color: #b8bfc9;
+  margin: 0 10px;
+}
+.subtitle {
+  color: var(--muted);
+  font-size: 16px;
+  margin: 0 0 24px;
+  line-height: 1.5;
+}
+.article-tabs {
+  display: flex;
+  align-items: center;
+  gap: 23px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  min-height: 44px;
+  font-size: 12px;
+}
+.article-tabs a {
+  padding: 14px 0 12px;
+}
+.article-tabs a:first-child {
+  border-bottom: 2px solid #343b45;
+  color: #202122;
+}
+.article-tabs span {
+  margin-left: auto;
+  color: #7b828c;
+  font-size: 11px;
+}
+.byline {
+  font-size: 11px;
+  color: #7b828c;
+  margin: 14px 0 25px;
+}
+
+/* 4. Article and infobox. minmax(0, 1fr) lets text wrap inside a grid column. */
+.article {
+  font-size: 15px;
+}
+.article-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 254px;
+  gap: 32px;
+  align-items: start;
+}
+.lead {
+  margin: 0 0 23px;
+}
+.reference-mark {
+  font-size: 10px;
+  vertical-align: super;
+}
+.contents-box {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  background: #f8f9fa;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 16px 20px 13px;
+  font-size: 13px;
+}
+.contents-box strong {
+  font-size: 13px;
+}
+.contents-box .muted {
+  font-size: 10px;
+}
+.contents-box ol {
+  grid-column: 1 / -1;
+  margin: 13px 0 0;
+  padding-left: 18px;
+  color: #7b828c;
+}
+.contents-box li {
+  padding: 4px 0 4px 5px;
+}
+.key-idea {
+  background: #f0f4fa;
+  border-left: 3px solid #6d89b7;
+  padding: 18px 20px;
+  margin-top: 24px;
+}
+.key-idea > span {
+  color: #526b8f;
+  font-size: 10px;
+  letter-spacing: 1.3px;
+  font-weight: bold;
+}
+.key-idea p {
+  font:
+    19px/1.55 Georgia,
+    serif;
+  margin: 10px 0 0;
+  color: #35465e;
+}
+.infobox {
+  border: 1px solid #c7cdd5;
+  background: #fafbfc;
+  padding: 9px;
+  border-radius: 2px;
+  font-size: 12px;
+}
+.infobox-title {
+  padding: 10px;
+  text-align: center;
+  background: #eaf0f8;
+  font-family: Georgia, serif;
+  font-size: 19px;
+}
+.infobox figure {
+  margin: 18px 12px 16px;
+  text-align: center;
+}
+.book-cover {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: 225px;
+  object-fit: contain;
+  margin: auto;
+  filter: drop-shadow(2px 4px 3px #0002);
+}
+.infobox figcaption {
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-top: 12px;
+}
+.infobox dl {
+  display: grid;
+  grid-template-columns: 70px minmax(0, 1fr);
+  gap: 12px 10px;
+  border-top: 1px solid var(--border);
+  padding: 16px 6px 4px;
+  margin: 0;
+  line-height: 1.5;
+}
+.infobox dt {
+  font-weight: bold;
+  color: #46505c;
+}
+.infobox dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.search-label {
+  font-size: 0.83em;
+}
+.cover-fallback {
+  width: 160px;
+  min-height: 225px;
+  background: #e6ecf5;
+  color: #2c4161;
+  padding: 23px 15px;
+  margin: auto;
+  border-left: 6px solid #becce0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+}
+.cover-fallback strong {
+  font:
+    24px Georgia,
+    serif;
+  overflow-wrap: anywhere;
+}
+.cover-fallback span,
+.cover-fallback small {
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+.section-heading {
+  display: flex;
+  align-items: baseline;
+  border-bottom: 1px solid var(--border);
+  margin-top: 34px;
+  gap: 12px;
+}
+.section-heading h2 {
+  border: 0;
+  margin: 0;
+  flex: 1;
+}
+.count-label {
+  color: var(--muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+.section-note {
+  font-size: 12px;
+  line-height: 1.7;
+}
+.chapter-list {
+  margin-top: 23px;
+  border-top: 1px solid var(--border);
+}
+.chapter {
+  display: flex;
+  gap: 21px;
+  padding: 21px 2px;
+  border-bottom: 1px solid #e4e7eb;
+}
+.chapter-number {
+  font-family: Georgia, serif;
+  font-size: 22px;
+  color: #8997ac;
+  flex: 0 0 30px;
+  line-height: 1.3;
+}
+.chapter p {
+  font-size: 14px;
+  color: #4d5661;
+  margin: 0;
+  line-height: 1.75;
+  white-space: pre-line;
+}
+.references {
+  padding-left: 22px;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.references li {
+  padding: 4px 0 4px 5px;
+  overflow-wrap: anywhere;
+}
+.category-line {
+  border: 1px solid var(--border);
+  background: #f8f9fa;
+  padding: 12px 15px;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 30px;
+}
+.category-line span {
+  display: inline-block;
+  padding-left: 12px;
+  color: #476799;
+}
+footer {
+  margin-top: 40px;
+  padding: 24px 0 30px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  color: var(--muted);
+  font-size: 10px;
+}
+footer > span {
+  color: #414b57;
+  font:
+    15px Georgia,
+    serif;
+}
+footer p {
+  margin: 0;
+  flex: 1;
+}
+footer a {
+  white-space: nowrap;
+}
+
+/* 5. Add-book form. Native HTML fields provide keyboard and required-field support. */
+.add-page {
+  max-width: 900px;
+}
+.form-notice {
+  background: #f0f4fa;
+  border-left: 3px solid #6d89b7;
+  font-size: 13px;
+  line-height: 1.7;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 20px;
+}
+form label {
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 18px;
+}
+form input,
+form select,
+form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 7px;
+  border: 1px solid #aeb7c3;
+  border-radius: 3px;
+  background: white;
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.5;
+}
+form textarea {
+  resize: vertical;
+}
+form small {
+  display: block;
+  font-weight: normal;
+  color: var(--muted);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+fieldset {
+  min-width: 0;
+  border: 1px solid var(--border);
+  padding: 20px 18px 4px;
+  margin: 18px 0;
+  background: #fafbfc;
+}
+legend {
+  font-size: 13px;
+  font-weight: bold;
+  padding: 0 8px;
+  color: #526b8f;
+}
+.text-button {
+  background: none;
+  border: 0;
+  padding: 0 0 16px;
+  color: #a03636;
+  font-size: 12px;
+}
+.form-actions {
+  display: flex;
+  gap: 12px;
+  border-top: 1px solid var(--border);
+  padding-top: 25px;
+  margin-top: 25px;
+}
+.error-message,
+.success-message {
+  padding: 13px 16px;
+  font-size: 13px;
+  border: 1px solid;
+  border-radius: 3px;
+  line-height: 1.7;
+}
+.error-message {
+  background: #fff4f2;
+  color: #8a3026;
+  border-color: #e2beb6;
+}
+.success-message {
+  background: #eef7f0;
+  color: #2b6840;
+  border-color: #bfd9c6;
+}
+
+/* 6. Responsive rules replace columns when the screen becomes too narrow. */
+@media (min-width: 1450px) {
+  .page-layout {
+    gap: 65px;
+  }
+  .article-columns {
+    grid-template-columns: minmax(0, 1fr) 270px;
+    gap: 45px;
+  }
+}
+@media (max-width: 1050px) {
+  .page-layout {
+    gap: 26px;
+    grid-template-columns: 175px minmax(0, 1fr);
+  }
+  .article-columns {
+    grid-template-columns: minmax(0, 1fr) 220px;
+    gap: 22px;
+  }
+  .infobox dl {
+    grid-template-columns: 59px minmax(0, 1fr);
+  }
+  h1 {
+    font-size: 37px;
+  }
+}
+@media (max-width: 850px) {
+  .header-description {
+    display: none;
+  }
+  .site-header {
+    justify-content: space-between;
+  }
+  .page-layout {
+    grid-template-columns: 1fr;
+    padding-top: 24px;
+  }
+  .sidebar {
+    position: static;
+  }
+  .sidebar-heading,
+  .sidebar-bottom,
+  .book-nav button span {
+    display: none;
+  }
+  .search-box {
+    max-width: 320px;
+    margin: 0 0 14px;
+  }
+  .book-nav {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    gap: 5px;
+  }
+  .book-nav button {
+    white-space: nowrap;
+    border-left: 0;
+    border-bottom: 2px solid transparent;
+    padding: 9px 12px;
+  }
+  .book-nav button.selected {
+    border-bottom-color: var(--blue);
+  }
+  .article-columns {
+    grid-template-columns: minmax(0, 1fr) 230px;
+  }
+}
+@media (max-width: 580px) {
+  .site-header {
+    padding: 18px 5%;
+    min-height: 86px;
+    gap: 12px;
+  }
+  .brand {
+    gap: 7px;
+  }
+  .brand img {
+    width: 33px;
+    height: 33px;
+  }
+  .brand strong {
+    font-size: 18px;
+    letter-spacing: 0.5px;
+  }
+  .brand small {
+    font-size: 10px;
+  }
+  .site-header .primary-button {
+    font-size: 12px;
+    padding: 9px 11px;
+  }
+  .page-layout {
+    padding: 23px 5% 0;
+    gap: 20px;
+  }
+  h1 {
+    font-size: 34px;
+  }
+  h2 {
+    font-size: 24px;
+  }
+  .subtitle {
+    font-size: 14px;
+  }
+  .article-tabs {
+    gap: 18px;
+    font-size: 11px;
+  }
+  .article-tabs span {
+    display: none;
+  }
+  .article-columns {
+    grid-template-columns: 1fr;
+  }
+  .infobox {
+    max-width: 320px;
+    width: 100%;
+    margin: 4px auto 0;
+  }
+  .section-heading {
+    align-items: center;
+  }
+  .section-heading h2 {
+    font-size: 23px;
+  }
+  .chapter {
+    gap: 14px;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  footer {
+    flex-wrap: wrap;
+  }
+  footer p {
+    flex-basis: 70%;
+  }
+}
