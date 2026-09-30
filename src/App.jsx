@@ -79,7 +79,12 @@ export default function App() {
           onClick={() => selectBook('make-it-stick')}
           aria-label="Bookipedia home"
         >
-          <img src="/favicon.svg" alt="" width="46" height="46" />
+          <img
+  src={`${import.meta.env.BASE_URL}favicon.svg`}
+  alt=""
+  width="46"
+  height="46"
+/>
           <span>
             <strong>BOOKIPEDIA</strong>
             <small>The reading companion</small>

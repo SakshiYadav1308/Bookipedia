@@ -13,7 +13,9 @@ export function AuthorLink({ author }) {
 
 function BookCover({ book }) {
   const [failed, setFailed] = useState(false);
-  const source = book.custom ? book.coverUrl : `/covers/${book.id}.jpg`;
+  const source = book.custom
+  ? book.coverUrl
+  : `${import.meta.env.BASE_URL}covers/${book.id}.jpg`;
 
   // A failed image should never leave a broken-image icon in the article.
   if (!source || failed) {
